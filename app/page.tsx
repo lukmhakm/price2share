@@ -274,28 +274,46 @@ export default function Home() {
                 <div className="grid grid-cols-12 gap-3">
                     <div className="col-span-7 flex flex-col space-y-1.5">
                         <label className="text-xs font-bold text-gray-600 uppercase">Harga Beli (Rp) *</label>
-                        <input
-                            type="number"
-                            name="harga_beli"
-                            value={inputs.harga_beli || ''}
-                            onChange={handleInputChange}
-                            onBlur={handleHargaBeliBlur}
-                            placeholder="E.g., 200000"
-                            className="bg-[#1b4332] border border-transparent rounded-xl p-3 text-2xl font-black text-white placeholder-emerald-100/40 focus:bg-[#23533e] focus:ring-2 focus:ring-emerald-400 focus:outline-none transition-all"
-                            required
-                        />
+                        <div className="bg-[#1b4332] border border-transparent rounded-xl p-2 flex items-center gap-3 focus-within:bg-[#23533e] focus-within:ring-2 focus-within:ring-emerald-400 transition-all">
+                            {/* Icon Badge */}
+                            <div className="w-11 h-11 rounded-full bg-white/15 flex items-center justify-center shrink-0">
+                                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0">
+                                    <span className="text-[11px] font-black text-[#1b4332] leading-none">Rp</span>
+                                </div>
+                            </div>
+                            <input
+                                type="number"
+                                name="harga_beli"
+                                value={inputs.harga_beli || ''}
+                                onChange={handleInputChange}
+                                onBlur={handleHargaBeliBlur}
+                                placeholder="200000"
+                                className="bg-transparent border-none outline-none w-full text-2xl font-black text-white placeholder-emerald-100/40 p-0 focus:ring-0 focus:outline-none"
+                                required
+                            />
+                        </div>
                     </div>
                     <div className="col-span-5 flex flex-col space-y-1.5">
                         <label className="text-xs font-bold text-gray-600 uppercase">Volume (ml/gr) *</label>
-                        <input
-                            type="number"
-                            name="volume_full"
-                            value={inputs.volume_full || ''}
-                            onChange={handleInputChange}
-                            placeholder="100"
-                            className="bg-[#1b4332] border border-transparent rounded-xl p-3 text-2xl font-black text-center text-white placeholder-emerald-100/40 focus:bg-[#23533e] focus:ring-2 focus:ring-emerald-400 focus:outline-none transition-all"
-                            required
-                        />
+                        <div className="bg-[#1b4332] border border-transparent rounded-xl p-2 flex items-center gap-2 focus-within:bg-[#23533e] focus-within:ring-2 focus-within:ring-emerald-400 transition-all">
+                            {/* Icon Badge */}
+                            <div className="w-11 h-11 rounded-full bg-white/15 flex items-center justify-center shrink-0">
+                                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0">
+                                    <svg className="w-4 h-4 text-[#1b4332]" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M19 19.5L13.5 9V4h1.5V2H9v2h1.5v5L5 19.5c-.6 1-.1 2.5 1.1 2.5h11.8c1.2 0 1.7-1.5 1.1-2.5zM7.7 19l3.8-7.2V4h1v7.8l3.8 7.2H7.7z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <input
+                                type="number"
+                                name="volume_full"
+                                value={inputs.volume_full || ''}
+                                onChange={handleInputChange}
+                                placeholder="100"
+                                className="bg-transparent border-none outline-none w-full text-2xl font-black text-center text-white placeholder-emerald-100/40 p-0 focus:ring-0 focus:outline-none"
+                                required
+                            />
+                        </div>
                     </div>
                 </div>
 
@@ -303,25 +321,45 @@ export default function Home() {
                 <div className="grid grid-cols-2 gap-3 pt-1">
                     <div className="flex flex-col space-y-1.5">
                         <label className="text-xs font-bold text-gray-600 uppercase">Brand</label>
-                        <input
-                            type="text"
-                            name="brand"
-                            value={inputs.brand || ''}
-                            onChange={handleInputChange}
-                            placeholder="E.g., Cosrx"
-                            className="bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm font-semibold text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#1b4332] focus:outline-none transition-all"
-                        />
+                        <div className="bg-white border border-gray-200 rounded-xl p-2 flex items-center gap-3 focus-within:border-transparent focus-within:ring-2 focus-within:ring-[#1b4332] transition-all">
+                            {/* Icon Badge */}
+                            <div className="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center shrink-0">
+                                <div className="w-7 h-7 rounded-full bg-[#1b4332] flex items-center justify-center shrink-0">
+                                    <svg className="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12.41 2.58A2 2 0 0011 2H4a2 2 0 00-2 2v7c0 .55.22 1.05.59 1.41l9 9a2 2 0 002.83 0l7-7a2 2 0 000-2.83l-9-9zM6 8a2 2 0 110-4 2 2 0 010 4z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <input
+                                type="text"
+                                name="brand"
+                                value={inputs.brand || ''}
+                                onChange={handleInputChange}
+                                placeholder="E.g., Maybelline"
+                                className="bg-transparent border-none outline-none w-full text-base font-semibold text-gray-900 placeholder-gray-400 p-0 focus:ring-0 focus:outline-none"
+                            />
+                        </div>
                     </div>
                     <div className="flex flex-col space-y-1.5">
                         <label className="text-xs font-bold text-gray-600 uppercase">Nama Produk</label>
-                        <input
-                            type="text"
-                            name="product_name"
-                            value={inputs.product_name || ''}
-                            onChange={handleInputChange}
-                            placeholder="E.g., Snail Mucin"
-                            className="bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm font-semibold text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#1b4332] focus:outline-none transition-all"
-                        />
+                        <div className="bg-white border border-gray-200 rounded-xl p-2 flex items-center gap-3 focus-within:border-transparent focus-within:ring-2 focus-within:ring-[#1b4332] transition-all">
+                            {/* Icon Badge */}
+                            <div className="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center shrink-0">
+                                <div className="w-7 h-7 rounded-full bg-[#1b4332] flex items-center justify-center shrink-0">
+                                    <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M20 7.5L12 3 4 7.5M20 7.5v9L12 21M20 7.5L12 12M4 7.5v9L12 21M4 7.5L12 12M12 12v9" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <input
+                                type="text"
+                                name="product_name"
+                                value={inputs.product_name || ''}
+                                onChange={handleInputChange}
+                                placeholder="E.g., FitMe"
+                                className="bg-transparent border-none outline-none w-full text-base font-semibold text-gray-900 placeholder-gray-400 p-0 focus:ring-0 focus:outline-none"
+                            />
+                        </div>
                     </div>
                 </div>
 
