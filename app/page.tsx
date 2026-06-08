@@ -401,10 +401,26 @@ export default function Home() {
                 {/* Brand & Product Name Badge (Positioned below the header & tab switcher line) */}
                 <div className="pt-1.5 pb-1">
                     { (inputs.brand?.trim() || inputs.product_name?.trim()) ? (
-                        <div className="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded-lg text-xs sm:text-sm font-semibold tracking-wide text-emerald-800 self-start">
+                        <div className="inline-flex items-center flex-wrap gap-1.5 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded-lg text-xs sm:text-sm font-semibold tracking-wide text-emerald-800 self-start">
                             <span className="font-extrabold uppercase">{inputs.brand?.trim() || 'Tanpa Brand'}</span>
                             <span className="text-emerald-300 font-light">|</span>
                             <span className="text-emerald-900 font-medium">{inputs.product_name?.trim() || 'Produk Baru'}</span>
+                            {inputs.harga_beli > 0 && (
+                                <>
+                                    <span className="text-emerald-300 font-light">|</span>
+                                    <span className="text-emerald-900 font-semibold font-mono">
+                                        {inputs.harga_beli >= 1000 
+                                            ? `${Number((inputs.harga_beli / 1000).toFixed(1).replace(/\.0$/, ''))}K`
+                                            : inputs.harga_beli}
+                                    </span>
+                                </>
+                            )}
+                            {inputs.volume_full > 0 && (
+                                <>
+                                    <span className="text-emerald-300 font-light">|</span>
+                                    <span className="text-emerald-900 font-semibold font-mono">{inputs.volume_full}ml</span>
+                                </>
+                            )}
                         </div>
                     ) : (
                         <div className="inline-flex items-center gap-1.5 bg-gray-100 border border-gray-200 px-2.5 py-1 rounded-lg text-xs sm:text-sm font-medium tracking-wide text-gray-500 self-start">
