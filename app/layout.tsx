@@ -1,4 +1,11 @@
+import { JetBrains_Mono } from 'next/font/google';
 import './globals.css';
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+});
 
 export const metadata = {
   title: 'SHAREPRICE // Cosmetic Calculator',
@@ -16,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id">
+    <html lang="id" className={jetbrainsMono.variable}>
       <body className="bg-[#f0f0f0] min-h-screen">
         {children}
       </body>
