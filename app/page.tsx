@@ -281,7 +281,7 @@ export default function Home() {
                             onChange={handleInputChange}
                             onBlur={handleHargaBeliBlur}
                             placeholder="E.g., 200000"
-                            className="bg-gray-50 border border-gray-200 rounded-xl p-3 text-lg font-bold text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#1b4332] focus:outline-none transition-all"
+                            className="bg-[#1b4332] border border-transparent rounded-xl p-3 text-2xl font-black text-white placeholder-emerald-100/40 focus:bg-[#23533e] focus:ring-2 focus:ring-emerald-400 focus:outline-none transition-all"
                             required
                         />
                     </div>
@@ -293,7 +293,7 @@ export default function Home() {
                             value={inputs.volume_full || ''}
                             onChange={handleInputChange}
                             placeholder="100"
-                            className="bg-gray-50 border border-gray-200 rounded-xl p-3 text-2xl font-black text-center text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#1b4332] focus:outline-none transition-all"
+                            className="bg-[#1b4332] border border-transparent rounded-xl p-3 text-2xl font-black text-center text-white placeholder-emerald-100/40 focus:bg-[#23533e] focus:ring-2 focus:ring-emerald-400 focus:outline-none transition-all"
                             required
                         />
                     </div>
