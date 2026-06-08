@@ -271,8 +271,8 @@ export default function Home() {
                     </button>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="flex flex-col space-y-1.5">
+                <div className="grid grid-cols-12 gap-3">
+                    <div className="col-span-7 flex flex-col space-y-1.5">
                         <label className="text-xs font-bold text-gray-600 uppercase">Harga Beli (Rp) *</label>
                         <input
                             type="number"
@@ -285,16 +285,42 @@ export default function Home() {
                             required
                         />
                     </div>
-                    <div className="flex flex-col space-y-1.5">
-                        <label className="text-xs font-bold text-gray-600 uppercase">Volume Full Size (ml/gr) *</label>
+                    <div className="col-span-5 flex flex-col space-y-1.5">
+                        <label className="text-xs font-bold text-gray-600 uppercase">Volume (ml/gr) *</label>
                         <input
                             type="number"
                             name="volume_full"
                             value={inputs.volume_full || ''}
                             onChange={handleInputChange}
-                            placeholder="E.g., 100"
-                            className="bg-gray-50 border border-gray-200 rounded-xl p-3 text-lg font-bold text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#1b4332] focus:outline-none transition-all"
+                            placeholder="100"
+                            className="bg-gray-50 border border-gray-200 rounded-xl p-3 text-2xl font-black text-center text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#1b4332] focus:outline-none transition-all"
                             required
+                        />
+                    </div>
+                </div>
+
+                {/* Brand & Product Name (Moved outside settings) */}
+                <div className="grid grid-cols-2 gap-3 pt-1">
+                    <div className="flex flex-col space-y-1.5">
+                        <label className="text-xs font-bold text-gray-600 uppercase">Brand</label>
+                        <input
+                            type="text"
+                            name="brand"
+                            value={inputs.brand || ''}
+                            onChange={handleInputChange}
+                            placeholder="E.g., Cosrx"
+                            className="bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm font-semibold text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#1b4332] focus:outline-none transition-all"
+                        />
+                    </div>
+                    <div className="flex flex-col space-y-1.5">
+                        <label className="text-xs font-bold text-gray-600 uppercase">Nama Produk</label>
+                        <input
+                            type="text"
+                            name="product_name"
+                            value={inputs.product_name || ''}
+                            onChange={handleInputChange}
+                            placeholder="E.g., Snail Mucin"
+                            className="bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm font-semibold text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#1b4332] focus:outline-none transition-all"
                         />
                     </div>
                 </div>
@@ -319,31 +345,6 @@ export default function Home() {
                     </button>
                     {isSettingsOpen && (
                         <div className="p-4 space-y-4 bg-white border-t border-gray-100">
-                            {/* Brand & Product Name */}
-                            <div className="grid grid-cols-2 gap-3">
-                                <div className="flex flex-col">
-                                    <label className="text-[10px] font-bold text-gray-500 uppercase mb-1">Brand</label>
-                                    <input
-                                        type="text"
-                                        name="brand"
-                                        value={inputs.brand || ''}
-                                        onChange={handleInputChange}
-                                        placeholder="E.g., Cosrx"
-                                        className="border border-gray-200 rounded-lg p-2 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-[#1b4332]"
-                                    />
-                                </div>
-                                <div className="flex flex-col">
-                                    <label className="text-[10px] font-bold text-gray-500 uppercase mb-1">Nama Produk</label>
-                                    <input
-                                        type="text"
-                                        name="product_name"
-                                        value={inputs.product_name || ''}
-                                        onChange={handleInputChange}
-                                        placeholder="E.g., Snail Mucin"
-                                        className="border border-gray-200 rounded-lg p-2 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-[#1b4332]"
-                                    />
-                                </div>
-                            </div>
 
                             {/* Packing & Min Profit */}
                             <div className="grid grid-cols-2 gap-3">
