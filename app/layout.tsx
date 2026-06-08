@@ -3,6 +3,11 @@ import './globals.css';
 export const metadata = {
   title: 'SHAREPRICE // Cosmetic Calculator',
   description: 'Calculators and historical records for sharing cosmetic prices',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Price2Share',
+  },
 };
 
 export default function RootLayout({
