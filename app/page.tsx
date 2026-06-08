@@ -110,8 +110,10 @@ export default function Home() {
         const variants: ShareVariant[] = matrixResults.map(row => ({
             volume_share: row.vol,
             biaya_packing: inputs.biaya_packing,
+            biaya_proses: inputs.biaya_proses,
             min_profit: inputs.min_profit,
             admin_fee_percentage: inputs.admin_fee_percentage,
+            service_fee_percentage: inputs.service_fee_percentage,
             admin_pk: 0,
             whole_profit: inputs.whole_profit,
             min_price_calculated: row.minusAdmin,
@@ -158,11 +160,11 @@ export default function Home() {
                 }
                 
                 const modalCairan = item.volume_full > 0 ? (item.harga_beli / item.volume_full) * v.volume_share : 0;
-                const minPrice = modalCairan + v.biaya_packing + v.min_profit;
+                const minPrice = modalCairan + v.biaya_packing + (v.biaya_proses || 0) + v.min_profit;
                 const minPriceCalculated = v.min_price_calculated || 0;
                 
                 if (minPriceCalculated > minPrice && modalCairan > 0) {
-                    wholeProfitLoaded = Math.round(100 * (minPriceCalculated - v.biaya_packing) / modalCairan);
+                    wholeProfitLoaded = Math.round(100 * (minPriceCalculated - v.biaya_packing - (v.biaya_proses || 0)) / modalCairan);
                     break;
                 }
             }
@@ -174,9 +176,11 @@ export default function Home() {
             harga_beli: item.harga_beli,
             volume_full: item.volume_full,
             biaya_packing: primaryVar ? primaryVar.biaya_packing : 0,
+            biaya_proses: primaryVar ? (primaryVar.biaya_proses || 0) : 0,
             min_profit: primaryVar ? primaryVar.min_profit : 0,
             whole_profit: wholeProfitLoaded,
-            admin_fee_percentage: primaryVar ? primaryVar.admin_fee_percentage : 0
+            admin_fee_percentage: primaryVar ? primaryVar.admin_fee_percentage : 0,
+            service_fee_percentage: primaryVar ? (primaryVar.service_fee_percentage || 0) : 0
         };
 
         setInputs(newInputs);
@@ -184,9 +188,11 @@ export default function Home() {
         // Sync to localStorage
         if (typeof window !== 'undefined') {
             window.localStorage.setItem('shareprice_biaya_packing', String(newInputs.biaya_packing));
+            window.localStorage.setItem('shareprice_biaya_proses', String(newInputs.biaya_proses));
             window.localStorage.setItem('shareprice_min_profit', String(newInputs.min_profit));
             window.localStorage.setItem('shareprice_whole_profit', String(newInputs.whole_profit));
             window.localStorage.setItem('shareprice_admin_fee', String(newInputs.admin_fee_percentage));
+            window.localStorage.setItem('shareprice_service_fee', String(newInputs.service_fee_percentage));
         }
 
         setSaveStatus({
@@ -394,19 +400,8 @@ export default function Home() {
                     {isSettingsOpen && (
                         <div className="p-4 space-y-4 bg-white border-t border-gray-100">
 
-                            {/* Packing & Min Profit */}
+                            {/* Min Profit & Whole Profit */}
                             <div className="grid grid-cols-2 gap-3">
-                                <div className="flex flex-col">
-                                    <label className="text-[10px] font-bold text-gray-500 uppercase mb-1">Biaya Packing (Rp)</label>
-                                    <input
-                                        type="number"
-                                        name="biaya_packing"
-                                        value={inputs.biaya_packing || ''}
-                                        onChange={handleInputChange}
-                                        placeholder="3000"
-                                        className="border border-gray-200 rounded-lg p-2 text-xs font-mono font-semibold focus:outline-none focus:ring-1 focus:ring-[#1b4332]"
-                                    />
-                                </div>
                                 <div className="flex flex-col">
                                     <label className="text-[10px] font-bold text-gray-500 uppercase mb-1">Min Profit (Rp)</label>
                                     <input
@@ -418,10 +413,6 @@ export default function Home() {
                                         className="border border-gray-200 rounded-lg p-2 text-xs font-mono font-semibold focus:outline-none focus:ring-1 focus:ring-[#1b4332]"
                                     />
                                 </div>
-                            </div>
-
-                            {/* Whole Profit & Admin Fee */}
-                            <div className="grid grid-cols-2 gap-3">
                                 <div className="flex flex-col">
                                     <label className="text-[10px] font-bold text-gray-500 uppercase mb-1">Whole Profit (%)</label>
                                     <input
@@ -433,6 +424,36 @@ export default function Home() {
                                         className="border border-gray-200 rounded-lg p-2 text-xs font-mono font-semibold focus:outline-none focus:ring-1 focus:ring-[#1b4332]"
                                     />
                                 </div>
+                            </div>
+
+                            {/* Biaya Packing & Biaya Proses */}
+                            <div className="grid grid-cols-2 gap-3">
+                                <div className="flex flex-col">
+                                    <label className="text-[10px] font-bold text-gray-500 uppercase mb-1">Biaya Packing (Rp)</label>
+                                    <input
+                                        type="number"
+                                        name="biaya_packing"
+                                        value={inputs.biaya_packing || ''}
+                                        onChange={handleInputChange}
+                                        placeholder="2000"
+                                        className="border border-gray-200 rounded-lg p-2 text-xs font-mono font-semibold focus:outline-none focus:ring-1 focus:ring-[#1b4332]"
+                                    />
+                                </div>
+                                <div className="flex flex-col">
+                                    <label className="text-[10px] font-bold text-gray-500 uppercase mb-1">Biaya Proses (Rp)</label>
+                                    <input
+                                        type="number"
+                                        name="biaya_proses"
+                                        value={inputs.biaya_proses || ''}
+                                        onChange={handleInputChange}
+                                        placeholder="1250"
+                                        className="border border-gray-200 rounded-lg p-2 text-xs font-mono font-semibold focus:outline-none focus:ring-1 focus:ring-[#1b4332]"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Admin Fee & Service Fee */}
+                            <div className="grid grid-cols-2 gap-3">
                                 <div className="flex flex-col">
                                     <label className="text-[10px] font-bold text-gray-500 uppercase mb-1">Admin Fee (%)</label>
                                     <input
@@ -440,7 +461,18 @@ export default function Home() {
                                         name="admin_fee_percentage"
                                         value={inputs.admin_fee_percentage || ''}
                                         onChange={handleInputChange}
-                                        placeholder="6"
+                                        placeholder="8.25"
+                                        className="border border-gray-200 rounded-lg p-2 text-xs font-mono font-semibold focus:outline-none focus:ring-1 focus:ring-[#1b4332]"
+                                    />
+                                </div>
+                                <div className="flex flex-col">
+                                    <label className="text-[10px] font-bold text-gray-500 uppercase mb-1">Service Fee (%)</label>
+                                    <input
+                                        type="number"
+                                        name="service_fee_percentage"
+                                        value={inputs.service_fee_percentage || ''}
+                                        onChange={handleInputChange}
+                                        placeholder="5.5"
                                         className="border border-gray-200 rounded-lg p-2 text-xs font-mono font-semibold focus:outline-none focus:ring-1 focus:ring-[#1b4332]"
                                     />
                                 </div>

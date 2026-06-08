@@ -12,8 +12,10 @@ export interface ShareVariant {
     product_id?: string;
     volume_share: number;
     biaya_packing: number;
+    biaya_proses?: number;
     min_profit: number;
     admin_fee_percentage: number;
+    service_fee_percentage?: number;
     admin_pk: number;
     whole_profit?: number;
     min_price_calculated?: number;

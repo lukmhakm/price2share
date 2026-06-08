@@ -55,15 +55,15 @@ export const useProducts = () => {
 
             // Hitung ulang nilai akhir secara eksplisit untuk disimpan ke kolom kalkulasi di database
             const hargaModalPerJar = (product.harga_beli / product.volume_full) * variant.volume_share;
-            const minPrice = hargaModalPerJar + variant.biaya_packing + variant.min_profit;
+            const minPrice = hargaModalPerJar + variant.biaya_packing + (variant.biaya_proses || 0) + variant.min_profit;
             
             const wholeProfitPercentage = variant.whole_profit !== undefined ? variant.whole_profit : 100;
             const optPrice = product.volume_full > 0
-                ? (product.harga_beli / product.volume_full) * (wholeProfitPercentage / 100) * variant.volume_share + variant.biaya_packing
+                ? (product.harga_beli / product.volume_full) * (wholeProfitPercentage / 100) * variant.volume_share + variant.biaya_packing + (variant.biaya_proses || 0)
                 : 0;
 
             const minusAdmin = Math.max(minPrice, optPrice);
-            const percentageCost = variant.admin_fee_percentage / 100;
+            const percentageCost = (variant.admin_fee_percentage + (variant.service_fee_percentage || 0)) / 100;
             const divider = 1 - percentageCost;
             const plusAdmin = divider > 0 ? minusAdmin / divider : minusAdmin;
 
@@ -71,8 +71,10 @@ export const useProducts = () => {
                 product_id: productId,
                 volume_share: variant.volume_share,
                 biaya_packing: variant.biaya_packing,
+                biaya_proses: variant.biaya_proses || 0,
                 min_profit: variant.min_profit,
                 admin_fee_percentage: variant.admin_fee_percentage,
+                service_fee_percentage: variant.service_fee_percentage || 0,
                 admin_pk: variant.admin_pk || 0,
                 min_price_calculated: Math.round(minusAdmin),
                 final_price_calculated: Math.round(plusAdmin)
@@ -132,8 +134,10 @@ export const useProducts = () => {
                 product_id: productId,
                 volume_share: v.volume_share,
                 biaya_packing: v.biaya_packing,
+                biaya_proses: v.biaya_proses || 0,
                 min_profit: v.min_profit,
                 admin_fee_percentage: v.admin_fee_percentage,
+                service_fee_percentage: v.service_fee_percentage || 0,
                 admin_pk: v.admin_pk || 0,
                 min_price_calculated: Math.round(v.min_price_calculated || 0),
                 final_price_calculated: Math.round(v.final_price_calculated || 0),
