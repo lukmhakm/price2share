@@ -1,8 +1,9 @@
-import { JetBrains_Mono } from 'next/font/google';
+import { Courier_Prime } from 'next/font/google';
 import './globals.css';
 
-const jetbrainsMono = JetBrains_Mono({
+const courierPrime = Courier_Prime({
   subsets: ['latin'],
+  weight: ['400', '700'],
   variable: '--font-mono',
   display: 'swap',
 });
@@ -23,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" className={jetbrainsMono.variable}>
+    <html lang="id" className={courierPrime.variable}>
       <body className="bg-[#f0f0f0] min-h-screen">
         {children}
       </body>
