@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useCalculator } from '../hooks/useCalculator';
 import { useProducts } from '../hooks/useProducts';
 import { MasterProduct, ShareVariant } from '../types';
@@ -32,6 +32,41 @@ export default function Home() {
     useEffect(() => {
         setIsMounted(true);
     }, []);
+
+    // State for History Sorting
+    const [sortBy, setSortBy] = useState<'date' | 'brand'>('date');
+    const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
+
+    const handleSortChange = (type: 'date' | 'brand') => {
+        if (sortBy === type) {
+            setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
+        } else {
+            setSortBy(type);
+            setSortDirection(type === 'date' ? 'desc' : 'asc');
+        }
+    };
+
+    const sortedHistory = useMemo(() => {
+        if (!history) return [];
+        return [...history].sort((a, b) => {
+            if (sortBy === 'date') {
+                const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
+                const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
+                return sortDirection === 'desc' ? dateB - dateA : dateA - dateB;
+            } else {
+                const brandA = (a.brand || '').toLowerCase().trim();
+                const brandB = (b.brand || '').toLowerCase().trim();
+                if (brandA < brandB) return sortDirection === 'asc' ? -1 : 1;
+                if (brandA > brandB) return sortDirection === 'asc' ? 1 : -1;
+
+                const nameA = (a.product_name || '').toLowerCase().trim();
+                const nameB = (b.product_name || '').toLowerCase().trim();
+                if (nameA < nameB) return sortDirection === 'asc' ? -1 : 1;
+                if (nameA > nameB) return sortDirection === 'asc' ? 1 : -1;
+                return 0;
+            }
+        });
+    }, [history, sortBy, sortDirection]);
 
     // Handle input field changes
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -514,23 +549,49 @@ export default function Home() {
 
             {/* Calculation History list (Clean & Low-Profile) */}
             <section className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 space-y-4">
-                <div className="border-b border-gray-100 pb-2 flex items-center justify-between">
+                <div className="border-b border-gray-100 pb-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest">
                         📜 Histori Perhitungan
                     </h2>
+                    
+                    {/* Sort Selector */}
+                    <div className="flex bg-gray-100 rounded-lg p-0.5 text-[10px] font-bold border border-gray-250 self-end sm:self-auto shadow-inner">
+                        <button
+                            onClick={() => handleSortChange('date')}
+                            className={`px-2.5 py-1 rounded-md transition-all flex items-center gap-1 ${
+                                sortBy === 'date'
+                                    ? 'bg-[#1b4332] text-white shadow-sm'
+                                    : 'text-gray-500 hover:text-gray-800'
+                            }`}
+                        >
+                            <span>Tanggal</span>
+                            {sortBy === 'date' && (sortDirection === 'desc' ? '▼' : '▲')}
+                        </button>
+                        <button
+                            onClick={() => handleSortChange('brand')}
+                            className={`px-2.5 py-1 rounded-md transition-all flex items-center gap-1 ${
+                                sortBy === 'brand'
+                                    ? 'bg-[#1b4332] text-white shadow-sm'
+                                    : 'text-gray-500 hover:text-gray-800'
+                            }`}
+                        >
+                            <span>Brand</span>
+                            {sortBy === 'brand' && (sortDirection === 'asc' ? '▲' : '▼')}
+                        </button>
+                    </div>
                 </div>
 
                 {historyLoading ? (
                     <div className="text-center font-semibold text-xs py-6 uppercase text-gray-400 animate-pulse">
                         LOADING HISTORI DARI DATABASE...
                     </div>
-                ) : history.length === 0 ? (
+                ) : sortedHistory.length === 0 ? (
                     <div className="text-center font-semibold text-xs py-6 uppercase text-gray-400 border border-dashed border-gray-200 rounded-xl p-3">
                         TIDAK ADA DATA HISTORI
                     </div>
                 ) : (
                     <div className="space-y-2.5">
-                        {history.map((item, index) => {
+                        {sortedHistory.map((item, index) => {
                             return (
                                 <div
                                     key={item.id || index}
