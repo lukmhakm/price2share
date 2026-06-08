@@ -276,9 +276,9 @@ export default function Home() {
                         <label className="text-xs font-bold text-gray-600 uppercase">Harga Beli (Rp) *</label>
                         <div className="bg-[#1b4332] border border-transparent rounded-xl p-2 flex items-center gap-3 focus-within:bg-[#23533e] focus-within:ring-2 focus-within:ring-emerald-400 transition-all">
                             {/* Icon Badge */}
-                            <div className="w-11 h-11 rounded-full bg-white/15 flex items-center justify-center shrink-0">
-                                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0">
-                                    <span className="text-[11px] font-black text-[#1b4332] leading-none">Rp</span>
+                            <div className="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center shrink-0">
+                                <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center shrink-0">
+                                    <span className="text-[9.5px] font-black text-[#1b4332] leading-none">Rp</span>
                                 </div>
                             </div>
                             <input
@@ -297,9 +297,9 @@ export default function Home() {
                         <label className="text-xs font-bold text-gray-600 uppercase">Volume (ml/gr) *</label>
                         <div className="bg-[#1b4332] border border-transparent rounded-xl p-2 flex items-center gap-2 focus-within:bg-[#23533e] focus-within:ring-2 focus-within:ring-emerald-400 transition-all">
                             {/* Icon Badge */}
-                            <div className="w-11 h-11 rounded-full bg-white/15 flex items-center justify-center shrink-0">
-                                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0">
-                                    <svg className="w-4 h-4 text-[#1b4332]" fill="currentColor" viewBox="0 0 24 24">
+                            <div className="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center shrink-0">
+                                <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center shrink-0">
+                                    <svg className="w-3 h-3 text-[#1b4332]" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M19 19.5L13.5 9V4h1.5V2H9v2h1.5v5L5 19.5c-.6 1-.1 2.5 1.1 2.5h11.8c1.2 0 1.7-1.5 1.1-2.5zM7.7 19l3.8-7.2V4h1v7.8l3.8 7.2H7.7z" />
                                     </svg>
                                 </div>
