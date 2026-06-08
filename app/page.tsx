@@ -36,6 +36,7 @@ export default function Home() {
     // State for History Sorting
     const [sortBy, setSortBy] = useState<'date' | 'brand'>('date');
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
+    const [selectedHistoryId, setSelectedHistoryId] = useState<string | null>(null);
 
     const handleSortChange = (type: 'date' | 'brand') => {
         if (sortBy === type) {
@@ -75,6 +76,7 @@ export default function Home() {
             ...prev,
             [name]: type === 'number' ? (value === '' ? 0 : Number(value)) : value
         }));
+        setSelectedHistoryId(null);
     };
 
     // Auto multiplier shortcut for Harga Beli on Blur
@@ -85,6 +87,7 @@ export default function Home() {
                 ...prev,
                 harga_beli: val * 1000
             }));
+            setSelectedHistoryId(null);
         }
     };
 
@@ -141,6 +144,7 @@ export default function Home() {
 
     // Load past calc item from history
     const handleLoadFromHistory = (item: any) => {
+        setSelectedHistoryId(item.id || null);
         const primaryVar = item.variants && item.variants.length > 0 ? item.variants[0] : null;
 
         let wholeProfitLoaded = 100;
@@ -198,6 +202,9 @@ export default function Home() {
         try {
             const res = await deleteProduct(id);
             if (res && res.success) {
+                if (selectedHistoryId === id) {
+                    setSelectedHistoryId(null);
+                }
                 setSaveStatus({
                     type: 'success',
                     message: 'Histori kalkulasi berhasil dihapus! 🗑️'
@@ -264,7 +271,10 @@ export default function Home() {
                         INPUT UTAMA
                     </h2>
                     <button
-                        onClick={resetCalculator}
+                        onClick={() => {
+                            resetCalculator();
+                            setSelectedHistoryId(null);
+                        }}
                         className="text-xs text-red-600 hover:text-red-700 font-bold transition-colors"
                     >
                         Reset Kalkulator
@@ -635,11 +645,18 @@ export default function Home() {
                                 <div
                                     key={item.id || index}
                                     onClick={() => handleLoadFromHistory(item)}
-                                    className="bg-gray-50 rounded-xl p-3 border border-gray-150 hover:bg-[#e8f0ea]/30 hover:border-emerald-200 cursor-pointer shadow-sm transition-all flex items-center justify-between gap-3 group"
+                                    className={`rounded-xl p-3 border cursor-pointer shadow-sm transition-all flex items-center justify-between gap-3 group ${
+                                        selectedHistoryId === item.id
+                                            ? 'bg-emerald-50/20 border-emerald-600 ring-1 ring-emerald-600/20 shadow-emerald-100/50'
+                                            : 'bg-gray-50 border-gray-150 hover:bg-[#e8f0ea]/30 hover:border-emerald-200'
+                                    }`}
                                 >
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center justify-between mb-1.5">
                                             <div className="flex items-center gap-2 min-w-0">
+                                                {selectedHistoryId === item.id && (
+                                                    <span className="text-emerald-700 font-bold text-xs shrink-0">✓</span>
+                                                )}
                                                 <span className="bg-[#1b4332] text-white text-[8px] font-extrabold uppercase px-2 py-0.5 rounded-md shrink-0">
                                                     {item.brand}
                                                 </span>
